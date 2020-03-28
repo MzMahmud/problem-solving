@@ -11,7 +11,7 @@ learning an algorithm and solving the catagories of LightOJ.
 * [User Statistics](http://lightoj.com/volume_userstat.php?user_id=9737)
 * [Category-wise Solved Statistics](http://lightoj.com/volume_problemcategory.php?user_id=9737) 
 
-## [UVaOJ](http://lightoj.com)
+## [UVaOJ](https://onlinejudge.org/)
 
 I personally don't like UVa. It looks clumsy to me. Thats why did not solve much of UVa!
 
