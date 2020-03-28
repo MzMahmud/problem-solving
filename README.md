@@ -8,6 +8,7 @@ This is a Bangladeshi online judge. I actually love this OJ because of its well 
 I started solving in thin OJ when I was in **Class 10**. Love it since then. My common work flow is
 learning an algorithm and solving the catagories of LightOJ.
 
+* [User Statistics](http://lightoj.com/volume_userstat.php?user_id=9737)
 * [Category-wise Solved Statistics](http://lightoj.com/volume_problemcategory.php?user_id=9737) 
 
 ## [UVaOJ](http://lightoj.com)
