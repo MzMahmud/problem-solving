@@ -25,12 +25,9 @@ class Solution:
             out = ''
             rec = prev_a.index(a)
             for i in range(len(prev_a)):
-                if i == rec:
-                    out += '(' + c[i]
-                else:
-                    out += c[i]
-            out += ')'
-            return out
+                out += (('(' if i == rec else '') + c[i])
+
+            return out + ')'
 
         prev_a.append(a)
 
@@ -43,4 +40,4 @@ class Solution:
 
 s = Solution()
 
-print(s.fractionToDecimal(1, 2))
+print(s.fractionToDecimal(1, 13))
