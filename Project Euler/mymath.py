@@ -111,11 +111,14 @@ class Fraction:
     """
     Fraction Class: Keeps any Fraction in lowest form
     +,-,*,/ operator is overloaded
+    Fraction(1,2) + 1 |
+    1 + Fraction(1,2) | Both works 
+    For,+,-,*,/
     """
 
     def __init__(self, a=0, b=1):
-        self.a = a
-        self.b = b
+        self.a = int(a)
+        self.b = int(b)
         self._normalize()
 
     def _normalize(self):
@@ -132,18 +135,30 @@ class Fraction:
         c, d = other.a, other.b
         return Fraction(a*d + b*c, b*d)
 
+    def __radd__(self, other: int):
+        return Fraction(other) + self
+
     def __sub__(self, other):
         a, b = self.a, self.b
         c, d = other.a, other.b
         return Fraction(a*d - b*c, b*d)
+
+    def __rsub__(self, other):
+        return Fraction(other) - self
 
     def __mul__(self, other):
         a, b = self.a, self.b
         c, d = other.a, other.b
         return Fraction(a*c, b*d)
 
+    def __rmul__(self, other):
+        return Fraction(other) * self
+
     def __truediv__(self, other):
         return self * Fraction(other.b, other.a)
+
+    def __rtruediv__(self, other):
+        return Fraction(other)/self
 
     def __str__(self):
         if self.b == 1:
@@ -152,3 +167,6 @@ class Fraction:
 
     def __float__(self):
         return self.a/self.b
+
+    def __int__(self):
+        return self.a//self.b
