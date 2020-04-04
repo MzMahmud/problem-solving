@@ -41,6 +41,19 @@ int dijkstra(int s, int d, vector<vector<Edge>> adj) {
     while (!PQ.empty()) {
         Node u = PQ.top();
         PQ.pop();
+
+        /* This conditionis very imoportant.
+         * In original algo, decrease key functionality
+         * is needed. But C++/Java library PriorityQue
+         * odes not provide that. So one node can be inserted
+         * multiple times. So, to avoid loop if the old bigger
+         * cost version is get just skip the loop. This leads
+         * to more memory usage. But what to do if own min heap is
+         * not to be implemented!
+         */
+        if (u.cost > dist[u.at])
+            continue;
+
         for (int i = 0; i < adj[u.at].size(); i++) {
             Edge e = adj[u.at][i];
             if (dist[e.v] > dist[u.at] + e.w) {
