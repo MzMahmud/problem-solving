@@ -1,18 +1,4 @@
-def is_prime(n):
-    if n < 2:
-        return False
-    if n == 2:
-        return True
-    if n % 2 == 0:
-        return False
-
-    i = 3
-    while i*i <= n:
-        if n % i == 0:
-            return False
-        i += 2
-
-    return True
+from mymath import is_prime
 
 
 right_append_allowed = ['1', '3', '7', '9']
@@ -54,3 +40,5 @@ both_left_right = [p for p in right_truncatable_primes if p >
 
 print(both_left_right)
 print(sum(both_left_right))
+# [23, 37, 53, 73, 313, 317, 373, 797, 3137, 3797, 739397]
+# 748317

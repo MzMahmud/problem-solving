@@ -1,23 +1,11 @@
-def sum_proper_divison(n):
-    i = 1
-    sod = 0
-    while i*i <= n:
-        if n % i == 0:
-            sod += i
-            if i != 1 and i != (n/i):
-                sod += (n//i)
-
-        i += 1
-
-    return sod
-
+from mymath import sum_of_divisons
 
 upto = 10000
 
 sopd = [0 for _ in range(upto + 1)]
 
 for n in range(2, upto + 1):
-    sopd[n] = sum_proper_divison(n)
+    sopd[n] = sum_of_divisons(n) - n
 
 amicable_sum = 0
 for i in range(2, upto + 1):
@@ -27,3 +15,10 @@ for i in range(2, upto + 1):
             print(i, j)
 
 print(f'amicable_sum = {amicable_sum}')
+
+# 220 284
+# 1184 1210
+# 2620 2924
+# 5020 5564
+# 6232 6368
+# amicable_sum = 31626

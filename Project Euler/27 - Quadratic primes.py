@@ -1,18 +1,4 @@
-def is_prime(n):
-    if n < 2:
-        return False
-    if n == 2:
-        return True
-    if n % 2 == 0:
-        return False
-
-    i = 3
-    while i*i <= n:
-        if n % i == 0:
-            return False
-        i += 2
-
-    return True
+from mymath import is_prime
 
 
 def quadratic(a, b, n):
@@ -41,3 +27,4 @@ for a in range(-LIMIT + 1, LIMIT):
 
 print(f'max run {max_run},max a {max_a},max b {max_b}')
 print(max_a*max_b)
+# -59231

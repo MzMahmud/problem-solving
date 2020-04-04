@@ -1,9 +1,5 @@
+from mymath import is_square
 from math import sqrt
-
-
-def is_square(n):
-    droot = sqrt(n)
-    return int(droot) == droot
 
 
 def is_pentagonal(n: int) -> bool:
