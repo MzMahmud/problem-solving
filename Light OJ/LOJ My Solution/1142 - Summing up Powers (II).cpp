@@ -7,12 +7,12 @@
         Let,S(k)   = A + A^2 + A^3 + .... + A^k
         So, S(k-1) = A + A^2 + A^3 + .... + A^(k-1)
         Notice,
-        S(k) = A*S(k-1) + A
-        Now thiscan be formulated in Matrix form,
+        S(k) = A*S(k-1) + A, S(0) = zero matrix
+        Now this can be formulated in Matrix form,
 
-        | S(k) |   |A    A|  | S(k-1) |   |A    A|k  | S(1) |
+        | S(k) |   |A    A|  | S(k-1) |   |A    A|k  | S(0) |
         |      | = |      |  |        | = |      |   |      |
-        |  A   |   |0    I|  |   A    |   |0    I|   |   A  |
+        |  I   |   |0    I|  |   I    |   |0    I|   |   I  |
 
         So,now matrix exponentiation can be done in O(lg k)
         in each step a fix n^3 is needed to multiply matrices
@@ -154,13 +154,10 @@ int main() {
         matrix I = identity(n);
         matrix Z = zeros(n);
 
-        matrix22 mat(a, I, Z, I);
-        matrix22 ak = power(mat, k - 1, 10);
-
-        matrix ans = a * (ak.a[0][0] + ak.a[0][1]);
-
+        matrix22 mat(a, a, Z, I);
+        mat = power(mat, k, 10);
         cout << "Case " << (cn++) << ":\n";
-        cout << (ans % 10);
+        cout << mat.a[0][1];
     }
     return 0;
 }
