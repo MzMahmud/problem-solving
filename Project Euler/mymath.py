@@ -9,6 +9,7 @@ def gcd(a: int, b: int) -> int:
     """
     while b != 0:
         a, b = b, a % b
+
     return a
 
 
@@ -18,6 +19,7 @@ def lcm(a: int, b: int) -> int:
     """
     if a == 0 and b == 0:
         return 0
+
     return a//gcd(a, b)*b
 
 
@@ -39,6 +41,7 @@ def is_prime(n: int) -> bool:
         if n % i == 0:
             return False
         i += 2
+
     return True
 
 
@@ -47,8 +50,7 @@ def number_of_divisors(n: int) -> int:
         returns number of divisiors on n
         Complexity: O(sqrt(n))
     """
-    i = 1
-    tau = 0
+    tau, i = 0, 1
     while i*i <= n:
         if n % i == 0:
             tau += 1
@@ -57,6 +59,7 @@ def number_of_divisors(n: int) -> int:
                 tau += 1
 
         i += 1
+
     return tau
 
 
@@ -105,6 +108,21 @@ def is_square(n: int) -> bool:
     """
     root = sqrt(n)
     return int(root) == root
+
+
+def big_mod(a, b, n):
+    """
+        returns a**b mod n in O(lg b)
+    """
+    if b == 0:
+        return 1 % n
+
+    x = big_mod(a, b//2, n)
+    x = (x * x) % n
+    if b % 2 == 1:
+        x = (x * a) % n
+
+    return x % n
 
 
 class Fraction:
