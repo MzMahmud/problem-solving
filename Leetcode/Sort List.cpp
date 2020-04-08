@@ -9,33 +9,35 @@
 class Solution {
 public:
     ListNode* sortList(ListNode* head) {
-        return sort(head);        
-    }
-    
-    ListNode *sort(ListNode *head, ListNode *end = NULL) {
-        if (!head)
+        if (!head or !head->next)
             return head;
-
-        if (head->next == end) {
-            head->next = NULL;
-            return head;
-        }
 
         // find middle
-        ListNode *mid = middle_node(head, end);
+        ListNode *fast, *slow, *prev;
+        prev = NULL;
+        fast = slow = head;
+        while (fast and fast->next) {
+            prev = slow;
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        // cuts the list in hlaf
+        prev->next = NULL;
+        // head....prev->slow...... to
+        // head....prev (and) slow.....
 
         // recurrsively sort left and right
-        ListNode *left = sort(head, mid);
-        ListNode *right = sort(mid, end);
+        ListNode *left = sortList(head);
+        ListNode *right = sortList(slow);
 
         // marge
         ListNode *i = left;
         ListNode *j = right;
 
         ListNode dummy_head(0);
-        ListNode *prev = &dummy_head;
         ListNode *curr = NULL;
 
+        prev = &dummy_head;
         while (i and j) {
             if (i->val < j->val) {
                 curr = i;
@@ -48,20 +50,11 @@ public:
             prev = curr;
         }
 
-        if (i) prev->next = i;
-        
-        if (j) prev->next = j;
+        if (i != NULL)
+            prev->next = i;
+        if (j != NULL)
+            prev->next = j;
 
         return dummy_head.next;
-    }
-    
-    ListNode *middle_node(ListNode *head, ListNode *end = NULL) {
-        ListNode *fast, *slow;
-        fast = slow = head;
-        while (fast != end and fast->next != end) {
-            slow = slow->next;
-            fast = fast->next->next;
-        }
-        return slow;
     }
 };
