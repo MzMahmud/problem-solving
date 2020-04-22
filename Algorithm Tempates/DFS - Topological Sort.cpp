@@ -44,8 +44,10 @@ void topological_sort() {
         if (color[u] == 'w') {
             dfs(u);
             // if cycle found no ordering
-            if (has_cycle)
+            if (has_cycle){
                 cout << "Not a DAG!" << endl;
+		return;
+	    }
         }
     }
     // ordering stored in order
