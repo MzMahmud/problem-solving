@@ -1,59 +1,41 @@
 /*
 // Definition for a Node.
-class Node {
-public:
-    int val;
-    vector<Node*> children;
+public class Node {
+    public int val;
+    public IList<Node> children;
 
-    Node() {}
+    public Node() {}
 
-    Node(int _val) {
+    public Node(int _val) {
         val = _val;
     }
 
-    Node(int _val, vector<Node*> _children) {
+    public Node(int _val, IList<Node> _children) {
         val = _val;
         children = _children;
     }
-};
+}
 */
-class Solution {
-public:
-    vector<vector<int>> levelOrder(Node* root) {
-        vector<vector<int>> levels;
-        vector<int> level;
+
+public class Solution {
+    public IList<IList<int>> LevelOrder(Node root) {
+        IList<IList<int>> output = new List<IList<int>>();
         
-        queue<pair<Node*,int>> q;
+        Queue<Node> q = new Queue<Node>(); 
+        if(root != null)
+            q.Enqueue(root);
         
-        if(root)
-            q.push(make_pair(root,0));
-        
-        int cur_level = -1;
-        
-        while(!q.empty()){
-            Node *u     = q.front().first;
-            int u_level = q.front().second;
-            q.pop();
-            
-            
-            if(u_level != cur_level){
-                if(level.size() > 0){
-                    levels.push_back(level);
-                    level.clear();
-                    cur_level = u_level;
+        while(q.Count != 0){
+            int n = q.Count;
+            output.Add(new List<int>(n));
+            for(int i = 0;i < n;i++){
+                Node node = q.Dequeue();
+                output[output.Count - 1].Add(node.val);
+                foreach(Node child in node.children){
+                    q.Enqueue(child);
                 }
             }
-            
-            level.push_back(u->val);
-            
-            for(int i = 0;i < u->children.size();i++){
-                Node *v = u->children[i];
-                q.push(make_pair(v,u_level + 1));
-            }
         }
-        
-        if(level.size() > 0)
-            levels.push_back(level);
-        return levels;
+        return output;
     }
-};
+}
