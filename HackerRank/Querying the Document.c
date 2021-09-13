@@ -36,51 +36,37 @@ void d_init(char *****d, int *d_len) {
 }
 
 char ****get_document(char *text) {
-    char *w;
-    int w_len = 0;
-    w_init(&w, &w_len);
-    char **s;
-    int s_len = 0;
-    s_init(&s, &s_len);
-    char ***p;
-    int p_len = 0;
-    p_init(&p, &p_len);
-    char ****d;
-    int d_len = 0;
-    d_init(&d, &d_len);
-
-    for (int i = 0; text[i] != 0; ++i) {
-        if (text[i] == ' ') {
-            if (w_len > 0)
+    char *w; int w_len = 0; w_init(&w, &w_len);
+    char **s; int s_len = 0; s_init(&s, &s_len);
+    char ***p; int p_len = 0; p_init(&p, &p_len);
+    char ****d; int d_len = 0; d_init(&d, &d_len);
+    
+    for(int i = 0;; ++i) {
+        int skip_this_char = 0;
+        if (text[i] == 0 || text[i] == ' ' || text[i] == '.' || text[i] == '\n') {
+            if (w_len > 0) {
                 s[s_len++] = w;
-            w_init(&w, &w_len);
-        } else if (text[i] == '.') {
-            if (w_len > 0)
-                s[s_len++] = w;
-            w_init(&w, &w_len);
-            if (s_len > 0)
-                p[p_len++] = s;
-            s_init(&s, &s_len);
-        } else if (text[i] == '\n') {
-            if (w_len > 0)
-                s[s_len++] = w;
-            w_init(&w, &w_len);
-            if (s_len > 0)
-                p[p_len++] = s;
-            s_init(&s, &s_len);
-            if (p_len > 0)
-                d[d_len++] = p;
-            p_init(&p, &p_len);
-        } else {
-            w[w_len++] = text[i];
+                w_init(&w, &w_len);
+            }
+            skip_this_char = 1;
         }
+        if (text[i] == 0 || text[i] == '.' || text[i] == '\n') {
+            if (s_len > 0) {
+                p[p_len++] = s;
+                s_init(&s, &s_len);
+            }
+            skip_this_char = 1;            
+        }
+        if (text[i] == 0 || text[i] == '\n') {
+            if (p_len > 0) {
+                d[d_len++] = p;
+                p_init(&p, &p_len);
+            }
+            skip_this_char = 1;            
+        }
+        if(text[i] == 0) break;
+        if(!skip_this_char) w[w_len++] = text[i];
     }
-    if (w_len > 0)
-        s[s_len++] = w;
-    if (s_len > 0)
-        p[p_len++] = s;
-    if (p_len > 0)
-        d[d_len++] = p;
     return d;
 }
 
