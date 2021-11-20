@@ -14,9 +14,8 @@ int binary_search(const vector<T> &a, T key, SearchType search_type = ANY_OCCURE
     int mid;
     int found_index = -1;
     while (lo <= hi) {
-        mid                 = lo + (hi - lo) / 2;
-        const int &mid_elem = a[mid];
-        if (mid_elem == key) {
+        mid = lo + (hi - lo) / 2;
+        if (a[mid] == key) {
             found_index = mid;
             if (search_type == ANY_OCCURENCE)
                 return found_index;
@@ -25,7 +24,7 @@ int binary_search(const vector<T> &a, T key, SearchType search_type = ANY_OCCURE
             else if (search_type == LAST_OCCURENCE)
                 lo = mid + 1;
         }
-        if (mid_elem < key) {
+        if (a[mid] < key) {
             lo = mid + 1;
         } else {
             hi = mid - 1;
