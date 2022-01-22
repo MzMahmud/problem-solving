@@ -3,24 +3,26 @@ class Solution {
         if(a[0] == b[0]) return a[1] < b[1];
         return a[0] < b[0];
     }
+    
+    void merge(vector<vector<int>>& intervals, const vector<int>& new_interval) {
+        if(intervals.empty()) {
+            intervals.push_back(new_interval);
+            return;
+        }
+        auto &last_interval = intervals.back();
+        if(last_interval[1] < new_interval[0]) {
+            intervals.push_back(new_interval);
+        } else {
+            last_interval[1] = max(last_interval[1], new_interval[1]);
+        }
+    }
 public:
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
         sort(intervals.begin(), intervals.end(), compare_interval);
         vector<vector<int>> merged_intervals;
-        int i = 0, j = 0;
-        int start = intervals[i][0], end = intervals[i][1];
-        while(j < intervals.size()) {
-            if(start <= intervals[j][0] && intervals[j][0] <= end) {
-                end = max(end, intervals[j][1]);
-                ++j;
-            } else {
-                merged_intervals.push_back({start, end});
-                i = j;
-                j = i;
-                start = intervals[i][0], end = intervals[i][1];
-            }
+        for(const auto &interval : intervals) {
+            merge(merged_intervals, interval);
         }
-        merged_intervals.push_back({start, end});
         return merged_intervals;
     }
 };
