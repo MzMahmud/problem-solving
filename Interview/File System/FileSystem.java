@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FileSystem {
-    static class FileNode {
+    private static class FileNode {
         public String name;
         public final Map<String, FileNode> children;
 
