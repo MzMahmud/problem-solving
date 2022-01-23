@@ -16,4 +16,3 @@ for file_name in files:
 
 print('\n\nFile System Tree:')
 file_system.print_as_tree()
-
