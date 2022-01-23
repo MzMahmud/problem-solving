@@ -29,7 +29,7 @@ public class FileSystem {
         public void printTree(String indent) {
             System.out.println(indent + FileSystem.SEPARATOR + name);
             children.values()
-                    .forEach(childFileNode -> childFileNode.printTree(indent + "\t"));
+                    .forEach(childFileNode -> childFileNode.printTree(indent + "|\t"));
         }
     }
 
@@ -43,9 +43,13 @@ public class FileSystem {
 
     private boolean addFile(String[] filePath) {
         String root = filePath[0];
-        FileNode rootFileNode = rootFileNodesByName.getOrDefault(root, new FileNode(root));
-        boolean isAdded = rootFileNode.addChildren(filePath, 1);
-        rootFileNodesByName.put(root, rootFileNode);
+        boolean isAdded = false;
+        if(!rootFileNodesByName.containsKey(root)) {
+            isAdded = true;
+            rootFileNodesByName.put(root, new FileNode(root));
+        }
+        FileNode rootFileNode = rootFileNodesByName.get(root);
+        isAdded |= rootFileNode.addChildren(filePath, 1);
         return isAdded;
     }
 
