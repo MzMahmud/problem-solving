@@ -3,3 +3,4 @@ __*
 *.out
 *.in
 main.*
+*.class
