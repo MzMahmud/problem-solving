@@ -35,25 +35,20 @@ public class FileSystem {
 
     private static final String SEPARATOR = "/";
 
-    private final Map<String, FileNode> rootFileNodesByName;
+    private final FileNode virtualRootNode;
 
     public FileSystem() {
-        this.rootFileNodesByName = new HashMap<>();
+        virtualRootNode = new FileNode("");
     }
 
     private boolean addFile(String[] filePath) {
-        String root = filePath[0];
-        boolean isAdded = false;
-        if(!rootFileNodesByName.containsKey(root)) {
-            isAdded = true;
-            rootFileNodesByName.put(root, new FileNode(root));
-        }
-        FileNode rootFileNode = rootFileNodesByName.get(root);
-        isAdded |= rootFileNode.addChildren(filePath, 1);
-        return isAdded;
+        return virtualRootNode.addChildren(filePath, 0);
     }
 
     public boolean addFile(String filePath) {
+        if (filePath == null || filePath.isEmpty()) {
+            throw new IllegalArgumentException("filePath can not be null or empty");
+        }
         String[] filePathArray = filePath.split(SEPARATOR);
         if (filePathArray.length == 0) {
             return false;
@@ -62,7 +57,7 @@ public class FileSystem {
     }
 
     public void printFilesTree() {
-        rootFileNodesByName.values()
-                           .forEach(childFileNode -> childFileNode.printTree(""));
+        virtualRootNode.children.values()
+                                .forEach(childFileNode -> childFileNode.printTree(""));
     }
 }
