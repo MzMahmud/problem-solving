@@ -14,12 +14,13 @@ public:
         if(head == nullptr) {
             return nullptr;
         }
+        ListNode *head_next = removeElements(head->next, val);
         if(head->val == val) {
-            ListNode *new_head = removeElements(head->next, val);
             delete head;
-            return new_head;
+            head = head_next;
+        } else {
+            head->next = head_next;        
         }
-        head->next = removeElements(head->next, val);
         return head;
     }
 };
