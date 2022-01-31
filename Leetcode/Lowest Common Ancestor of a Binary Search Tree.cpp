@@ -9,6 +9,22 @@
  */
 class Solution {
 public:
+    // O(h) solution for BST
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root == nullptr) {
+            return nullptr;
+        }
+        if(p->val < root->val and q->val < root->val) {
+            return lowestCommonAncestor(root->left, p, q);
+        }
+    
+        if(root->val < p->val and root->val < q->val) {
+            return lowestCommonAncestor(root->right, p, q);
+        }
+        return root;
+    }
+    /*
+    - O(n)
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
         if(!root || root == p || root == q)
             return root;
@@ -22,5 +38,5 @@ public:
         return (l->val < root->val) ? 
                 lowestCommonAncestor(root->left ,p ,q) : 
                 lowestCommonAncestor(root->right,p ,q);
-    }
+    }*/
 };
