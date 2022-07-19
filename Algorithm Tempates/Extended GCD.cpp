@@ -1,36 +1,44 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-/*template <class T>
-void egcd(T a,T b,T &x,T &y){
-    if(!b){
-        x = 1;
-        y = 0;
-        return;
+
+// With Structured Binding since C++17
+// a x + b y = gcd(a, b)
+// usage: const auto [x, y, gcd] = egcd(b, a % b);
+tuple<int, int, int> egcd(int a, int b) {
+    if (b == 0) {
+        return {1, 0, a};
     }
-    egcd(b,a%b,x,y);
+    const auto [x, y, gcd] = egcd(b, a % b);
+    return {y, x - (a / b) * y, gcd};
+}
 
-    T temp = x;
-    x = y;
-    y = temp - (a/b)*y;
-}*/
-
-int egcd (int a, int b, int &x, int &y){
-    if(!a){
-        x = 0;y = 1;
+int egcd(int a, int b, int &x, int &y) {
+    if (!a) {
+        x = 0;
+        y = 1;
         return b;
     }
-    int x1,y1;
-    int d = egcd(b%a,a,x1,y1);
+    int x1, y1;
+    int d = egcd(b % a, a, x1, y1);
 
-    x = y1 - (b/a)*x1;
+    x = y1 - (b / a) * x1;
     y = x1;
     return d;
 }
 
-int main(){
-    //13x + 3y = 1gcd(a,b)
-    int a = 13,b = 3,x,y;
-    egcd(a,b,x,y);
-    cout << x << " " << y;
+int main() {
+    int a = 240, b = 46;
+    {
+        int x, y, gcd;
+        gcd = egcd(a, b, x, y);
+        printf("%d(%d) + %d(%d) = %d = gcd(%d, %d) = %d\n", a, x, b, y, a * x + b * y, a,
+               b, gcd);
+    }
+
+    {
+        const auto [x, y, gcd] = egcd(a, b);
+        printf("%d(%d) + %d(%d) = %d = gcd(%d, %d) = %d\n", a, x, b, y, a * x + b * y, a,
+               b, gcd);
+    }
 }
