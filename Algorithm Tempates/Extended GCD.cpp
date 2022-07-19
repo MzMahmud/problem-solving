@@ -25,17 +25,16 @@ int egcd(int a, int b, int &x, int &y) {
 }
 
 int main() {
+    const char *outputFormat = "%d(%d) + %d(%d) = %d = gcd(%d, %d) = %d\n";
     int a = 240, b = 46;
     {
         int x, y, gcd;
         gcd = egcd(a, b, x, y);
-        printf("%d(%d) + %d(%d) = %d = gcd(%d, %d) = %d\n", a, x, b, y, a * x + b * y, a,
-               b, gcd);
+        printf(outputFormat, a, x, b, y, a * x + b * y, a, b, gcd);
     }
 
     {
         const auto [x, y, gcd] = egcd(a, b);
-        printf("%d(%d) + %d(%d) = %d = gcd(%d, %d) = %d\n", a, x, b, y, a * x + b * y, a,
-               b, gcd);
+        printf(outputFormat, a, x, b, y, a * x + b * y, a, b, gcd);
     }
 }
