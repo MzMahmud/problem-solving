@@ -28,8 +28,7 @@ int main() {
     const char *outputFormat = "%d(%d) + %d(%d) = %d = gcd(%d, %d) = %d\n";
     int a = 240, b = 46;
     {
-        int x, y, gcd;
-        gcd = egcd(a, b, x, y);
+        int x, y, gcd = egcd(a, b, x, y);
         printf(outputFormat, a, x, b, y, a * x + b * y, a, b, gcd);
     }
 
