@@ -1,4 +1,6 @@
 class Solution {
+    private static final BiFunction<Integer, Long, Long> reduceCountFunction = (n, countN) -> countN - 1;
+
     public int[] findOriginalArray(int[] changed) {
         if (changed.length % 2 == 1) {
             return new int[0];
@@ -20,8 +22,8 @@ class Solution {
                 return new int[0];
             }
             original.add(number);
-            count.compute(number, (n, countN) -> countN - 1);
-            count.compute(doubled, (n, countN) -> countN - 1);
+            count.compute(number, reduceCountFunction);
+            count.compute(doubled, reduceCountFunction);
         }
         return original.stream()
                        .mapToInt(integer -> integer)
