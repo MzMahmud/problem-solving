@@ -1,4 +1,10 @@
 class Solution {
+    /* start from beginning and slide window.
+     * if current char is found, move start after last time current char is seen.
+     * after moving start [start,current] is guaranteed to have unique chars.
+     * calculate and update max_length.
+     * record current char's latest occurrence.
+     */
     public int lengthOfLongestSubstring(String s) {
         Map<Character, Integer> seenAtIndex = new HashMap<>();
         int maxLength = 0;
