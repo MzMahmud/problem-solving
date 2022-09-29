@@ -1,5 +1,5 @@
 class Solution {
-    /* Notice that in any rotated array a,
+    /* Notice that in any rotated sorted array a,
      * if a[lo] <= a[mid] -> a[lo...mid] is sorted
      * else               -> a[hi...mid] is sorted
      * Now if a[lo...mid] is sorted and target is not in the interval [a[lo], a[hi]]
