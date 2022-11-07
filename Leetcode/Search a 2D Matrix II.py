@@ -1,4 +1,5 @@
 class Solution(object):
+    # O(n + m) Time | O(1) Space
     def searchMatrix(self, matrix, target):
         n, m = len(matrix), len(matrix[0]) 
         i, j = 0, m - 1
