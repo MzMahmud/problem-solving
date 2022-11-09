@@ -23,19 +23,20 @@ class Solution {
         boolean doReverse = false;
         while (!queue.isEmpty()) {
             int nNodesInLevel = queue.size();
-            List<Integer> level = new ArrayList<>();
+            LinkedList<Integer> level = new LinkedList<>();
             for (int i = 0; i < nNodesInLevel; ++i) {
                 TreeNode treeNode = queue.poll();
-                level.add(treeNode.val);
+                if (doReverse) {
+                    level.addFirst(treeNode.val);
+                } else {
+                    level.addLast(treeNode.val);
+                }
                 if (treeNode.left != null) {
                     queue.add(treeNode.left);
                 }
                 if (treeNode.right != null) {
                     queue.add(treeNode.right);
                 }
-            }
-            if(doReverse) {
-                Collections.reverse(level);
             }
             zigzagLevels.add(level);
             doReverse = !doReverse;
