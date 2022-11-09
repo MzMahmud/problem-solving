@@ -7,42 +7,44 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+
 class Solution {
+    private final Map<Integer, TreeNode> parentsByValue = new HashMap<>();
+
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
-        Map<Integer, TreeNode> parentsByValue = doDfsAndPopulateParents(root, null, new HashMap<>());
-        Map<Integer, Integer> distByValue = new HashMap<>();
+        parentsByValue.clear();
+        doDfsAndPopulateParents(root, null);
+
+        Set<Integer> visited = new HashSet<>();
         Queue<TreeNode> queue = new LinkedList<>();
         if (target != null) {
             queue.add(target);
-            distByValue.put(target.val, 0);
         }
-        List<Integer> nodesDistK = new ArrayList<>();
-        while (!queue.isEmpty()) {
-            TreeNode treeNode = queue.poll();
-            int dist = distByValue.get(treeNode.val);
-            if (dist == k) {
-                nodesDistK.add(treeNode.val);
-            } else if (dist > k) {
-                break;
-            }
-            TreeNode[] children = new TreeNode[] { parentsByValue.get(treeNode.val), treeNode.left, treeNode.right };
-            for (TreeNode child : children) {
-                if (child == null || distByValue.containsKey(child.val)) {
-                    continue;
+        int dist = 0;
+        while (!queue.isEmpty() && dist < k) {
+            int nNodesInLevel = queue.size();
+            for (int i = 0; i < nNodesInLevel; ++i) {
+                var treeNode = queue.poll();
+                visited.add(treeNode.val);
+                var children = new TreeNode[] { parentsByValue.get(treeNode.val), treeNode.left, treeNode.right };
+                for (var child : children) {
+                    if (child != null && !visited.contains(child.val)) {
+                        queue.add(child);
+                    }
                 }
-                distByValue.put(child.val, dist + 1);
-                queue.add(child);
             }
+            ++dist;
         }
-        return nodesDistK;
+        return queue.stream()
+                    .map(treeNode -> treeNode.val)
+                    .toList();
     }
 
-    public Map<Integer, TreeNode> doDfsAndPopulateParents(TreeNode root, TreeNode parent,
-            Map<Integer, TreeNode> parentsByValue) {
+    public Map<Integer, TreeNode> doDfsAndPopulateParents(TreeNode root, TreeNode parent) {
         if (root != null) {
             parentsByValue.put(root.val, parent);
-            doDfsAndPopulateParents(root.left, root, parentsByValue);
-            doDfsAndPopulateParents(root.right, root, parentsByValue);
+            doDfsAndPopulateParents(root.left, root);
+            doDfsAndPopulateParents(root.right, root);
         }
         return parentsByValue;
     }
