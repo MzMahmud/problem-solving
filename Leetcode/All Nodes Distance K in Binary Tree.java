@@ -13,7 +13,7 @@ class Solution {
 
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
         parentsByValue.clear();
-        doDfsAndPopulateParents(root, null);
+        doDfsAndPopulateParents(root, null, target);
 
         Set<Integer> visited = new HashSet<>();
         Queue<TreeNode> queue = new LinkedList<>();
@@ -40,12 +40,14 @@ class Solution {
                     .toList();
     }
 
-    public Map<Integer, TreeNode> doDfsAndPopulateParents(TreeNode root, TreeNode parent) {
-        if (root != null) {
-            parentsByValue.put(root.val, parent);
-            doDfsAndPopulateParents(root.left, root);
-            doDfsAndPopulateParents(root.right, root);
+    public void doDfsAndPopulateParents(TreeNode root, TreeNode parent, TreeNode target) {
+        if (root == null) {
+            return;
         }
-        return parentsByValue;
+        parentsByValue.put(root.val, parent);
+        if(root != target) {
+            doDfsAndPopulateParents(root.left, root, target);
+            doDfsAndPopulateParents(root.right, root, target);
+        }
     }
 }
