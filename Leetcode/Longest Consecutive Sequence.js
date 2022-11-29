@@ -7,11 +7,11 @@ const longestConsecutive = function (numbers) {
         if (uniqueNumbers.has(number - 1)) {
             continue;
         }
-        let currentRangeLength = 1, rangeValue = number + 1;
-        while (uniqueNumbers.has(rangeValue)) {
-            ++rangeValue;
-            ++currentRangeLength;
+        let upperLimit = number + 1;
+        while (uniqueNumbers.has(upperLimit)) {
+            ++upperLimit;
         }
+        let currentRangeLength = upperLimit - number;
         maxRangeLength = Math.max(maxRangeLength, currentRangeLength);
     }
     return maxRangeLength;
