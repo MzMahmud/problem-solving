@@ -1,28 +1,23 @@
 class Solution {
-public:
-    int longestConsecutive(vector<int>& nums) {
-        if(nums.size() < 1)
-            return 0;
-        
-        sort(nums.begin(),nums.end());
-        
-        int currentStreak = 1;
-        int longestStreak = 1;
-        
-        for(int i = 1;i < nums.size();i++){
-            int diff = nums[i] - nums[i - 1]; 
-            
-            if(diff == 0)
-                continue;
-            
-            if(diff == 1){
-                currentStreak++;
-            }else{
-                longestStreak = max(longestStreak,currentStreak);
-                currentStreak = 1;
+  public:
+    // O(n) Time | O(n) Space
+    int longestConsecutive(vector<int> &numbers) {
+        unordered_set<int> uniqueNumbers(begin(numbers), end(numbers));
+        int maxRangeLength = 0;
+        for (int number : numbers) {
+            int rangeStart = number - 1;
+            while (uniqueNumbers.find(rangeStart) != end(uniqueNumbers)) {
+                --rangeStart;
+                uniqueNumbers.erase(number);
             }
+            int rangeEnd = number + 1;
+            while (uniqueNumbers.find(rangeEnd) != end(uniqueNumbers)) {
+                ++rangeEnd;
+                uniqueNumbers.erase(number);
+            }
+            int currentRangeLength = rangeEnd - rangeStart - 1;
+            maxRangeLength = max(maxRangeLength, currentRangeLength);
         }
-        longestStreak = max(longestStreak,currentStreak);
-        return longestStreak;
+        return maxRangeLength;
     }
 };
