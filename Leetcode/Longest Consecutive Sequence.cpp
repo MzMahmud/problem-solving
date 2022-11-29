@@ -1,21 +1,24 @@
 class Solution {
+    bool contains(const unordered_set<int> &set, int value) {
+        return set.find(value) != end(set);
+    }
+
   public:
     // O(n) Time | O(n) Space
+    // solution explanation: https://youtu.be/P6RZZMu_maU
     int longestConsecutive(vector<int> &numbers) {
         unordered_set<int> uniqueNumbers(begin(numbers), end(numbers));
         int maxRangeLength = 0;
         for (int number : numbers) {
-            int rangeStart = number - 1;
-            while (uniqueNumbers.find(rangeStart) != end(uniqueNumbers)) {
-                --rangeStart;
-                uniqueNumbers.erase(number);
+            if (contains(uniqueNumbers, number - 1)) {
+                continue;
             }
-            int rangeEnd = number + 1;
-            while (uniqueNumbers.find(rangeEnd) != end(uniqueNumbers)) {
-                ++rangeEnd;
-                uniqueNumbers.erase(number);
+            int currentRangeLength = 1;
+            int rangeValue = number + 1;
+            while (contains(uniqueNumbers, rangeValue)) {
+                ++rangeValue;
+                ++currentRangeLength;
             }
-            int currentRangeLength = rangeEnd - rangeStart - 1;
             maxRangeLength = max(maxRangeLength, currentRangeLength);
         }
         return maxRangeLength;
