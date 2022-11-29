@@ -13,12 +13,11 @@ class Solution {
             if (contains(uniqueNumbers, number - 1)) {
                 continue;
             }
-            int currentRangeLength = 1;
-            int rangeValue = number + 1;
-            while (contains(uniqueNumbers, rangeValue)) {
-                ++rangeValue;
-                ++currentRangeLength;
+            int upperLimit = number + 1;
+            while (contains(uniqueNumbers, upperLimit)) {
+                ++upperLimit;
             }
+            int currentRangeLength = upperLimit - number;
             maxRangeLength = max(maxRangeLength, currentRangeLength);
         }
         return maxRangeLength;
