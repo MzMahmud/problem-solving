@@ -44,21 +44,20 @@ class FunctionalSolution {
                               FunctionalSolution::getFromNodeIndex,
                               Collectors.mapping(FunctionalSolution::getToNodeIndex, Collectors.toList())
                       ));
-        Integer timeToGetApple = minTimeToGetApple(0, -1, childrenByNode, hasApple);
-        return timeToGetApple == null ? 0 : timeToGetApple;
+        return minTimeToGetApple(0, -1, childrenByNode, hasApple).orElse(0);
     }
 
-    private Integer minTimeToGetApple(int root, int parent, Map<Integer, List<Integer>> childrenByNode, List<Boolean> hasApple) {
-        int childMinTime =
+    private Optional<Integer> minTimeToGetApple(int root, int parent, Map<Integer, List<Integer>> childrenByNode, List<Boolean> hasApple) {
+        int childTime =
                 childrenByNode.getOrDefault(root, List.of())
                               .stream()
                               .filter(child -> child != parent)
                               .map(child -> minTimeToGetApple(child, root, childrenByNode, hasApple))
-                              .filter(Objects::nonNull)
+                              .filter(Optional::isPresent)
+                              .map(Optional::get)
                               .mapToInt(minTime -> minTime + 2)
                               .sum();
-        boolean hasAnyApples = hasApple.get(root) || childMinTime > 0;
-        return hasAnyApples ? childMinTime : null;
+        return hasApple.get(root) || childTime > 0 ? Optional.of(childTime) : Optional.empty();
     }
 
     private static Integer getFromNodeIndex(int[] edge) {
