@@ -1,22 +1,20 @@
 class Solution {
     public int[][] insert(int[][] intervals, int[] newInterval) {
-        int positionOfNewInterval = intervals.length;
-        for(int i = 0;i < intervals.length; ++i) {
-            if(newInterval[0] < intervals[i][0]) {
-                positionOfNewInterval = i;
-                break;
-            }
-        }
-
+        boolean isInserted = false;
         List<int[]> afterInsert = new ArrayList<>();
-        for(int i = 0;i < positionOfNewInterval; ++i) {
-            afterInsert.add(intervals[i]);
-        }
-
-        insertInverval(afterInsert, newInterval);
-        
-        for(int i = positionOfNewInterval;i < intervals.length; ++i) {
-            insertInverval(afterInsert, intervals[i]);
+        for(int i = 0;i <= intervals.length; ++i) {
+            boolean canBeInserted = !isInserted && (i == intervals.length || newInterval[0] < intervals[i][0]);
+            if(canBeInserted) {
+                insertInverval(afterInsert, newInterval);
+                isInserted = true;
+                --i;
+            } else if(i < intervals.length) {
+                if(isInserted) {
+                    insertInverval(afterInsert, intervals[i]);
+                } else {
+                    afterInsert.add(intervals[i]);
+                }
+            }
         }
         return afterInsert.toArray(new int[0][]);
     }
