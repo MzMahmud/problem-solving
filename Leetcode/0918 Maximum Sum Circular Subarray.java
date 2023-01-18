@@ -1,5 +1,21 @@
 class Solution {
+    // O(n) time | O(1) space
     public int maxSubarraySumCircular(int[] nums) {
+        int sum = 0;
+        int maxSum = nums[0], curMax = 0;
+        int minSum = nums[0], curMin = 0;
+        for (int num : nums) {
+            curMax = Math.max(curMax + num, num);
+            maxSum = Math.max(maxSum, curMax);
+            curMin = Math.min(curMin + num, num);
+            minSum = Math.min(minSum, curMin);
+            sum += num;
+        }
+        return maxSum > 0 ? Math.max(maxSum, sum - minSum) : maxSum;
+    }
+
+    // O(n) time | O(n) space
+    public int maxSubarraySumCircularTwoPass(int[] nums) {
         int n = nums.length;
         int[] reverseMaxSubarraySum = new int[n];
         reverseMaxSubarraySum[n - 1] = nums[n - 1];
@@ -18,6 +34,6 @@ class Solution {
                 maxCirularSum = Math.max(maxCirularSum, prefixSum + reverseMaxSubarraySum[i + 1]);
             }
         }
-        return Math.max(maxNonCircularSum, maxCirularSum);  
+        return Math.max(maxNonCircularSum, maxCirularSum);
     }
 }
