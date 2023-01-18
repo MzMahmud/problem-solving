@@ -8,16 +8,16 @@ class Solution {
             reverseMaxSubarraySum[i] = Math.max(reverseMaxSubarraySum[i + 1], suffixSum);
         }
 
-        int maxSum = nums[0];
-        int specialSum = nums[0];
+        int maxNonCircularSum = nums[0];
+        int maxCirularSum = nums[0];
         for (int i = 0, prefixSum = 0, curMax = 0; i < n; ++i) {
             curMax = Math.max(curMax, 0) + nums[i];
-            maxSum = Math.max(maxSum, curMax);
+            maxNonCircularSum = Math.max(maxNonCircularSum, curMax);
             prefixSum += nums[i];
             if (i + 1 < n) {
-                specialSum = Math.max(specialSum, prefixSum + reverseMaxSubarraySum[i + 1]);
+                maxCirularSum = Math.max(maxCirularSum, prefixSum + reverseMaxSubarraySum[i + 1]);
             }
         }
-        return Math.max(maxSum, specialSum);  
+        return Math.max(maxNonCircularSum, maxCirularSum);  
     }
 }
