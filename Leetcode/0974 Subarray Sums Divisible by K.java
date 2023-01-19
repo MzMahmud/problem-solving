@@ -14,8 +14,8 @@ public class Solution {
             answer += nPrefixSumsByRemainder[prefixSumModK];
             // answer += nPrefixSumsByRemainder.getOrDefault(prefixSumModK, 0);
 
-            boolean isCurPrefixIsDivisible = prefixSumModK == 0;
-            if (isCurPrefixIsDivisible) ++answer;
+            boolean isCurPrefixDivisible = prefixSumModK == 0;
+            if (isCurPrefixDivisible) ++answer;
 
             ++nPrefixSumsByRemainder[prefixSumModK];
             // nPrefixSumsByRemainder.merge(prefixSumModK, 1 , Integer::sum);
