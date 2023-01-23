@@ -1,14 +1,12 @@
 class Solution:
-    def findJudge(self, N: int, trust: List[List[int]]) -> int:
-        possible_judges = dict()
-        for n in range(1, N + 1):
-            possible_judges[n] = 0
-        for ai, bi in trust:
-            if ai in possible_judges:
-                del possible_judges[ai]
-            if bi in possible_judges:
-                possible_judges[bi] += 1
-        for possible_judge, trust_count in possible_judges.items():
-            if trust_count == (N - 1):
-                return possible_judge
+    def findJudge(self, n, edges):
+        in_minus_degree = [0] * (n + 1)
+        for u, v in edges:
+            in_minus_degree[u] -= 1
+            in_minus_degree[v] += 1
+            
+        for i in range(1, n + 1):
+            if in_minus_degree[i] == (n - 1):
+                return i
+            
         return -1
