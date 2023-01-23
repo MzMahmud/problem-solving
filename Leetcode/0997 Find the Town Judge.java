@@ -15,4 +15,19 @@ class Solution {
         }
         return -1;
     }
+    
+    public int findJudgeInMinusOutDegree(int n, int[][] edges) {
+        int[] inMinusOutDegree = new int[n];
+        for (var edge : edges) {
+            int u = edge[0] - 1, v = edge[1] - 1;
+            --inMinusOutDegree[u];
+            ++inMinusOutDegree[v];
+        }
+        for (int i = 0; i < n; ++i) {
+            if (inMinusOutDegree[i] == (n - 1)) {
+                return i + 1;
+            }
+        }
+        return -1;
+    }
 }
