@@ -1,8 +1,8 @@
 class Solution {
     public int snakesAndLadders(int[][] board) {
-        int nNodes = board.length * board.length;
+        int[] flatBoard = flatten(board);
+        int nNodes = flatBoard.length;
         int goal = nNodes - 1;
-        var adjList = buildGraph(board);
         var dist = new Integer[nNodes];
         Queue<Integer> queue = new LinkedList<>();
         queue.add(0);
@@ -12,41 +12,25 @@ class Solution {
             if (node == goal) {
                 break;
             }
-            for (int neighbour : adjList.get(node)) {
-                if (dist[neighbour] != null) {
+            int maxNeighbour = Math.min(node + 6, goal);
+            for (int neighbour = node + 1; neighbour <= maxNeighbour; ++neighbour) {
+                int next = flatBoard[neighbour] < 0 ? neighbour : flatBoard[neighbour];
+                if (dist[next] != null) {
                     continue;
                 }
-                dist[neighbour] = dist[node] + 1;
-                queue.add(neighbour);
+                dist[next] = dist[node] + 1;
+                queue.add(next);
             }
         }
         return dist[goal] == null ? -1 : dist[goal];
     }
 
-    private List<Set<Integer>> buildGraph(int[][] board) {
-        int nNodes = board.length * board.length;
-        Map<Integer, Integer> snakesOrLaddersMap = getSnakesOrLaddersMap(board);
-        List<Set<Integer>> adjList = new ArrayList<>(nNodes);
-        for (int i = 0; i < nNodes; ++i) {
-            Set<Integer> neighbours = new HashSet<>();
-            int maxNeighbour = Math.min(i + 6, nNodes - 1);
-            for (int neighbour = i + 1; neighbour <= maxNeighbour; ++neighbour) {
-                neighbours.add(snakesOrLaddersMap.getOrDefault(neighbour, neighbour));
-            }
-            adjList.add(neighbours);
-        }
-        return adjList;
-    }
-
-    private Map<Integer, Integer> getSnakesOrLaddersMap(int[][] board) {
+    private int[] flatten(int[][] board) {
         int n = board.length;
-        Map<Integer, Integer> snakesOrLaddersMap = new HashMap<>(n);
+        int[] flattened = new int[n * n];
         int i = n - 1, j = 0, dj = 1, index = 0;
         while (i >= 0 & j >= 0) {
-            if (board[i][j] > 0) {
-                snakesOrLaddersMap.put(index, board[i][j] - 1);
-            }
-            ++index;
+            flattened[index++] = board[i][j] - 1;
             if (j == 0 && dj == -1 || j == (n - 1) && dj == 1) {
                 --i;
                 dj *= -1;
@@ -54,6 +38,6 @@ class Solution {
                 j += dj;
             }
         }
-        return snakesOrLaddersMap;
+        return flattened;
     }
 }
