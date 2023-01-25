@@ -1,16 +1,15 @@
 class Solution {
     public int closestMeetingNode(int[] edges, int node1, int node2) {
-        Integer[] dist1 = new Integer[edges.length];
+        int[] dist1 = new int[edges.length];
+        Arrays.fill(dist1, Integer.MAX_VALUE);
         dfs(node1, -1, edges, dist1);
 
-        Integer[] dist2 = new Integer[edges.length];
+        int[] dist2 = new int[edges.length];
+        Arrays.fill(dist2, Integer.MAX_VALUE);
         dfs(node2, -1, edges, dist2);
 
         int minMaxDist = Integer.MAX_VALUE, minNode = -1;
         for (int node = 0; node < edges.length; ++node) {
-            if (dist1[node] == null || dist2[node] == null) {
-                continue;
-            }
             int currMaxDist = Math.max(dist1[node], dist2[node]);
             if (currMaxDist < minMaxDist) {
                 minMaxDist = currMaxDist;
@@ -20,13 +19,11 @@ class Solution {
         return minNode;
     }
 
-    public void dfs(int node, int parent, int[] edges, Integer[] dist) {
-        if (dist[node] != null) {
+    public void dfs(int node, int parent, int[] edges, int[] dist) {
+        if (node < 0 || dist[node] != Integer.MAX_VALUE) {
             return;
         }
         dist[node] = parent == -1 ? 0 : 1 + dist[parent];
-        if (edges[node] >= 0) {
-            dfs(edges[node], node, edges, dist);
-        }
+        dfs(edges[node], node, edges, dist);
     }
 }
