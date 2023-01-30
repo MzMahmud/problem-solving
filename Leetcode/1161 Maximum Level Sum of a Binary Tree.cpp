@@ -8,42 +8,34 @@
  * };
  */
 
-struct NodeLevel{
-    TreeNode *node;
-    int level;
-    NodeLevel(TreeNode *n,int l) : node(n),level(l){}
-};
 class Solution {
-public:
-    int maxLevelSum(TreeNode* root) {
-        queue<NodeLevel> q;
-        
-        if(root) q.emplace(root,1);
-        
-        int curr_level = q.front().level,max_level;
-        int level_sum  = 0,max_sum = INT_MIN;
-        
-        while(!q.empty()){
-            auto p = q.front();q.pop();
-            
-            int level = p.level;
-            TreeNode *u = p.node;
-            
-            if(level != curr_level){
-                if(level_sum > max_sum){
-                    max_sum   = level_sum;
-                    max_level = curr_level;
-                }
-                level_sum  = 0;
-                curr_level = level; 
-            }
-            
-            level_sum += u->val;
-            
-            if(u->left)  q.emplace(u->left ,level + 1);            
-            if(u->right) q.emplace(u->right,level + 1);  
+  public:
+    int maxLevelSum(TreeNode *root) {
+        queue<TreeNode *> q;
+        if (root != nullptr) {
+            q.emplace(root);
         }
-        
-        return max_level;
+        int level = 1, max_level_sum, max_sum_level = 0;
+        while (!q.empty()) {
+            int n_nodes_in_level = q.size();
+            int level_sum = 0;
+            for (int i = 0; i < n_nodes_in_level; ++i) {
+                auto node = q.front();
+                q.pop();
+                level_sum += node->val;
+                if (node->left != nullptr) {
+                    q.emplace(node->left);
+                }
+                if (node->right != nullptr) {
+                    q.emplace(node->right);
+                }
+            }
+            if (max_sum_level == 0 || level_sum > max_level_sum) {
+                max_level_sum = level_sum;
+                max_sum_level = level;
+            }
+            ++level;
+        }
+        return max_sum_level;
     }
 };
