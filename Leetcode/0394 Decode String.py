@@ -1,7 +1,7 @@
 class Solution:
     def decodeString(self, encoded_string):
         decoded, _ = self.get_decoded_next_index(encoded_string)
-        return decoded
+        return "".join(decoded)
 
     def get_decoded_next_index(self, encoded_string, start=0):
         decoded = []
@@ -12,7 +12,7 @@ class Solution:
                 break
             if ch == '[':
                 decoded_inside, next_index = self.get_decoded_next_index(encoded_string, i + 1)
-                decoded.append(decoded_inside * repeat)
+                decoded.extend(decoded_inside * repeat)
                 repeat, i = 0, next_index
             elif Solution.is_english_letter(ch):
                 decoded.append(ch)
@@ -20,7 +20,7 @@ class Solution:
                 repeat = repeat * 10 + int(ch)
             i += 1
 
-        return "".join(decoded), i
+        return decoded, i
 
     @staticmethod
     def is_digit(char):
