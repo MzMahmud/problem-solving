@@ -1,38 +1,30 @@
 class Solution {
     public String decodeString(String s) {
+        return decodeString(0, s).decoded;
+    }
+
+    public DecodedNextIndex decodeString(int start, String s) {
         StringBuilder decoded = new StringBuilder();
-        StringBuilder encoded = new StringBuilder();
-        int repeat = 0, unpairedBraces = 0;
-        boolean encodedStringStarted = false;
-        for (int i = 0; i < s.length(); ++i) {
+        int repeat = 0, i;
+        for (i = start; i < s.length(); ++i) {
             char ch = s.charAt(i);
-            if (encodedStringStarted) {
-                if (ch == ']' && unpairedBraces == 1) {
-                    String decodedInside = decodeString(encoded.toString());
-                    decoded.append(decodedInside.repeat(repeat));
-                    encoded = new StringBuilder();
-                    encodedStringStarted = false;
-                    repeat = 0;
-                    unpairedBraces = 0;
-                } else {
-                    encoded.append(ch);
-                    if (ch == '[') {
-                        ++unpairedBraces;
-                    } else if (ch == ']') {
-                        --unpairedBraces;
-                    }
-                }
-            } else {
-                if ('a' <= ch && ch <= 'z') {
-                    decoded.append(ch);
-                } else if ('0' <= ch && ch <= '9') {
-                    repeat = repeat * 10 + ch - '0';
-                } else if (ch == '[') {
-                    encodedStringStarted = true;
-                    ++unpairedBraces;
-                }
+            if (ch == ']') {
+                break;
+            }
+            if (ch == '[') {
+                var decodedNextIndex = decodeString(i + 1, s);
+                decoded.append(decodedNextIndex.decoded.repeat(repeat));
+                i = decodedNextIndex.nextIndex;
+                repeat = 0;
+            } else if ('a' <= ch && ch <= 'z') {
+                decoded.append(ch);
+            } else if ('0' <= ch && ch <= '9') {
+                repeat = repeat * 10 + ch - '0';
             }
         }
-        return decoded.toString();
+        return new DecodedNextIndex(decoded.toString(), i);
+    }
+
+    record DecodedNextIndex(String decoded, int nextIndex) {
     }
 }
