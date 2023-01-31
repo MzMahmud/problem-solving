@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 class Solution:
     def bestTeamScore(self, scores, ages):
         score_ages = [ScoreAge(age, score) for age, score in zip(ages, scores)]
@@ -5,7 +7,7 @@ class Solution:
 
         best_scores = [score_age.score for score_age in score_ages]
         max_best_scores = float("-inf")
-        
+
         for i in range(len(best_scores)):
             for j in range(i - 1, -1, -1):
                 if score_ages[j].score <= score_ages[i].score:
@@ -16,10 +18,7 @@ class Solution:
         return max_best_scores
 
 
+@dataclass(order=True)
 class ScoreAge:
-    def __init__(self, age, score):
-        self.age = age
-        self.score = score
-
-    def __lt__(self, other):
-        return (self.age, self.score) < (other.age, other.score)
+    age: int
+    score: int
