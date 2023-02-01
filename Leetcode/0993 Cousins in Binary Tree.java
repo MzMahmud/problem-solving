@@ -7,20 +7,24 @@ class Solution {
         return areCousins;
     }
 
+    private static final int NOT_FOUND = -1;
+
     public int getDepth(TreeNode root, int x, int y, int depth) {
         if (root == null) {
-            return -1;
+            return NOT_FOUND;
         }
         if (x == root.val || y == root.val) {
             return depth;
         }
         int immediateChildDepth = depth + 1;
-        int depth1 = getDepth(root.left, x, y, immediateChildDepth);
-        int depth2 = getDepth(root.right, x, y, immediateChildDepth);
-        if (depth1 != -1 && depth2 != -1) {
-            areCousins = depth1 == depth2 && depth1 != immediateChildDepth;
-            return -1;
+        int depthFromLeft = getDepth(root.left, x, y, immediateChildDepth);
+        int depthFromRight = getDepth(root.right, x, y, immediateChildDepth);
+
+        if (depthFromLeft != NOT_FOUND && depthFromRight != NOT_FOUND) {
+            areCousins = depthFromLeft == depthFromRight && depthFromLeft != immediateChildDepth;
+            return NOT_FOUND;
         }
-        return Math.max(depth1, depth2);
+
+        return depthFromLeft == NOT_FOUND ? depthFromRight : depthFromLeft;
     }
 }
