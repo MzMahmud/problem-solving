@@ -30,18 +30,18 @@ class Solution {
     }
 
     private boolean isDivisor(String divisor, String dividend) {
-        int smallLength = divisor.length();
-        if (smallLength == 0) {
+        int divisorLength = divisor.length();
+        if (divisorLength == 0) {
             return dividend.length() == 0;
         }
         int i = 0;
         for (; i < dividend.length(); ++i) {
-            char largeCharI = dividend.charAt(i);
-            char smallCharI = divisor.charAt(i % smallLength);
-            if (largeCharI != smallCharI) {
+            char dividendCharI = dividend.charAt(i);
+            char divisorCharI = divisor.charAt(i % divisorLength);
+            if (dividendCharI != divisorCharI) {
                 return false;
             }
         }
-        return i % smallLength == 0;
+        return i % divisorLength == 0;
     }
 }
