@@ -1,7 +1,7 @@
 class Solution {
     // key idea of the problem is that if gcd string exists it must be of gcd of the length
     // clever solution. O(m + n) time
-    // the clever thing is cheking if gcd string does not exists by checking a + b == b + a
+    // the clever thing is cheking if gcd string does not exists by checking a + b != b + a
     // after the check is done the gcd must be a substring of gcd length 
     public String gcdOfStrings(String a, String b) {
         boolean hasNoGcdString = !(a + b).equals(b + a); // O(m + n) time
