@@ -9,7 +9,7 @@ class Solution:
 
 # O(m * n) time, O(m + n) space
 def multiply_optimized(a, b):
-    if a == '0' or b == 0:
+    if a == '0' or b == '0':
         return '0'
 
     m, n = len(a), len(b)
@@ -21,10 +21,8 @@ def multiply_optimized(a, b):
         for bi in reversed(b):
             multiplied = product[i] + ai * int(bi)
             product[i] = multiplied % 10
-
             if i < last_index:
                 product[i+1] += multiplied // 10
-
             i += 1
 
     while product[-1] == 0:
