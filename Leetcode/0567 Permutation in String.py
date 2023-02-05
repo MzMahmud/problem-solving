@@ -40,14 +40,10 @@ class Solution:
         
         # O(m) time
         a_chars = [0 for _ in range(alphabet_size)]
-        for char_a in a:
-            a_chars[char_index(char_a)] += 1
-
-        # O(k) time
         b_window_chars = [0 for _ in range(alphabet_size)]
-        # O(m) time
-        for i in range(m):
-            b_window_chars[char_index(b[i])] += 1
+        for char_a, char_b in zip(a, b):
+            a_chars[char_index(char_a)] += 1
+            b_window_chars[char_index(char_b)] += 1
 
         char_count_match = 0
         # O(k) time
