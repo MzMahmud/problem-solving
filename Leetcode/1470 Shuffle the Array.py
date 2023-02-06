@@ -11,7 +11,8 @@ class Solution:
             prev_value, curr = nums[start], 2 * start
             while True:
                 curr_nums = nums[curr]
-                # as 1 <= nums[i] <= 10^3 put a negative number to indicate that this position is already visited
+                # as 1 <= nums[i] <= 10^3 put a negative number 
+                # to indicate that this position is already visited
                 nums[curr] = -prev_value 
                 prev_value = curr_nums
 
