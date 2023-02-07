@@ -1,19 +1,20 @@
+from math import sqrt
+
 class Solution:
     def countPrimes(self, n):
-        if n < 3:
+        if n < 2:
             return 0
-        if n == 3:
-            return 1
-
-        nums = (n - 4) // 2 + 1
-        is_prime = [True] * nums
-        for i in range(3, n, 2):
-            i_index = (i - 3) // 2
-            if not is_prime[i_index]:
+        
+        is_prime = [1] * n
+        is_prime[0] = 0
+        is_prime[1] = 0
+        
+        limit = int(sqrt(n)) + 1
+        for i in range(2, limit):
+            if is_prime[j] == 0:
                 continue
-            j = i * i
-            while (index := (j - 3) // 2) < nums:
-                is_prime[index] = False
-                j += (2 * i)
 
-        return 1 + sum(is_prime)
+            for j in range(i*i, n, i):
+                is_prime[j] = 0 
+
+        return sum(is_prime)
