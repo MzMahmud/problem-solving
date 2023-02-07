@@ -1,20 +1,19 @@
-import java.util.*;
-
 class Solution {
     public int nthUglyNumber(int n) {
-        int i = 0, uglyNumber = 0;
-        var uglyNumbers = new PriorityQueue<>(Comparator.<Integer>naturalOrder().reversed());
-        uglyNumbers.add(1);
+        int i = 0;
+        long uglyNumber = 0;
+        PriorityQueue<Long> uglyNumbers = new PriorityQueue<>();
+        uglyNumbers.add(1L);
         while (i < n) {
             uglyNumber = uglyNumbers.poll();
             ++i;
             for (var factor : List.of(2, 3, 5)) {
-                int next = factor * uglyNumber;
+                long next = factor * uglyNumber;
                 if (!uglyNumbers.contains(next)) {
                     uglyNumbers.add(next);
                 }
             }
         }
-        return uglyNumber;
+        return (int) uglyNumber;
     }
 }
