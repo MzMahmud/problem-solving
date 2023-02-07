@@ -2,7 +2,7 @@ class Solution:
     BASKET_SIZE = 2
 
     def totalFruit(self, fruits):
-        left, right, max_window_len = 0, 0, 0
+        left, max_window_len = 0, 0
         last_index = {}
 
         for right, fruit in enumerate(fruits):
