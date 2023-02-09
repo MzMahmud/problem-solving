@@ -1,34 +1,25 @@
 class Solution:
+    ALPHABET_SIZE = 26
+
     def distinctNames(self, ideas):
-        suffixes_by_start = {}
-        start_chars_by_suffix = {}
+        suffixes_by_start = [set() for _ in range(Solution.ALPHABET_SIZE)]
         for idea in ideas:
-            start = idea[0]
-            suffix = idea[1:]
+            start, suffix = idea[0], idea[1:]
+            suffixes_by_start[char_index(start)].add(suffix)
 
-            if start not in suffixes_by_start:
-                suffixes_by_start[start] = set()
-            suffixes_by_start[start].add(suffix)
+        distinct_names = 0
+        for i in range(Solution.ALPHABET_SIZE):
+            for j in range(i + 1, Solution.ALPHABET_SIZE):
+                size_i = len(suffixes_by_start[i])
+                size_j = len(suffixes_by_start[j])
+                common_suffixes = suffixes_by_start[i].intersection(suffixes_by_start[j])
+                size_common = len(common_suffixes)
 
-            if suffix not in start_chars_by_suffix:
-                start_chars_by_suffix[suffix] = set()
-            start_chars_by_suffix[suffix].add(start)
+                distinct_name = 2 * (size_i - size_common) * (size_j - size_common)
+                distinct_names += distinct_name
 
-        n_suffixes_start_char_not_start_char = {
-            start: {other_start: 0 for other_start in suffixes_by_start}
-            for start in suffixes_by_start
-        }
-        starts = set(suffixes_by_start.keys())
-        for start, suffixes in suffixes_by_start.items():
-            for suffix in suffixes:
-                for other_start in starts.difference(start_chars_by_suffix[suffix]):
-                    n_suffixes_start_char_not_start_char[start][other_start] += 1
+        return distinct_names
 
-        names = 0
-        for idea in ideas:
-            suffix = idea[1:]
-            start = idea[0]
-            for other_start in starts.difference(start_chars_by_suffix[suffix]):
-                names += n_suffixes_start_char_not_start_char[other_start][start]
 
-        return names
+def char_index(char):
+    return ord(char) - ord('a')
