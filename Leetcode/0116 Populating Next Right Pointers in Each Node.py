@@ -18,3 +18,22 @@ class Solution:
                 prev = curr
 
         return root
+
+    def connect(self, root):
+        if root is None:
+            return root
+
+        parent, head, curr = root, root, root.left
+
+        while curr is not None:
+            curr.next = parent.right
+
+            if parent.next is None:
+                parent, head, curr = head, head.left, head.left
+                continue
+            
+            curr.next.next = parent.next.left
+            curr = curr.next.next
+            parent = parent.next
+
+        return root
