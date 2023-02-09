@@ -1,4 +1,5 @@
 class Solution:
+    # O(n) time, O(n) space
     def connect(self, root):
         if root is None:
             return root
@@ -19,6 +20,7 @@ class Solution:
 
         return root
 
+    # O(n) time, O(1) space
     def connect(self, root):
         if root is None:
             return root
@@ -31,7 +33,7 @@ class Solution:
             if parent.next is None:
                 parent, head, curr = head, head.left, head.left
                 continue
-            
+
             curr.next.next = parent.next.left
             curr = curr.next.next
             parent = parent.next
