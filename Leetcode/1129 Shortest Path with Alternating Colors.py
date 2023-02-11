@@ -9,8 +9,8 @@ class Solution:
         for u, v in blue_edges:
             adj_list[u][BLUE].append(v)
             
-        dist_start_red = dfs(0, adj_list, RED)
-        dist_start_blue = dfs(0, adj_list, BLUE)
+        dist_start_red = bfs(0, adj_list, RED)
+        dist_start_blue = bfs(0, adj_list, BLUE)
         
         dist_min = map(min, zip(dist_start_red, dist_start_blue))
         inf_removed = map(lambda d : -1 if d is INF else d, dist_min)
@@ -18,7 +18,7 @@ class Solution:
 
 
 
-def dfs(root, adj_list, color):
+def bfs(root, adj_list, color):
     dist = [INF for _ in adj_list]
     visited = [[False, False] for _ in dist]
 
