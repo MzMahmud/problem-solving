@@ -1,4 +1,4 @@
-RED, BLUE = 0, 1
+UNDEFINED, RED, BLUE = -1, 0, 1
 INF = float("inf")
 
 class Solution:
@@ -15,6 +15,40 @@ class Solution:
         dist_min = map(min, zip(dist_start_red, dist_start_blue))
         inf_removed = map(lambda d : -1 if d is INF else d, dist_min)
         return list(inf_removed)
+    
+    # single bfs
+    def shortestAlternatingPaths(self, n, red_edges, blue_edges):
+        adj_list = [[] for _ in range(n)]
+        for u, v in red_edges:
+            adj_list[u].append((v, RED))
+        for u, v in blue_edges:
+            adj_list[u].append((v, BLUE))
+
+        dist = [-1 for _ in range(n)]
+        visited = [[False, False] for _ in range(n)]
+
+        queue = deque([(0, UNDEFINED)])
+        dist[0] = 0
+        visited[0] = [True, True]
+        distance = 1
+
+        while queue:
+            nodes_in_level = len(queue)
+            for _ in range(nodes_in_level):
+                node, prev_color = queue.popleft()
+
+                for neighbour, color in adj_list[node]:
+                    if color == prev_color or visited[neighbour][color]:
+                        continue
+
+                    visited[neighbour][color] = True
+                    queue.append((neighbour, color))
+                    if dist[neighbour] == -1:
+                        dist[neighbour] = distance
+
+            distance += 1
+
+        return dist
 
 
 
