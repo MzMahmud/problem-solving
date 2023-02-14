@@ -14,3 +14,6 @@ class Solution:
             sum.append(f'{carry}')
 
         return "".join(reversed(sum))
+    
+    def addBinary(self, a, b):
+        return f'{(int(a, 2) + int(b, 2)):b}'
