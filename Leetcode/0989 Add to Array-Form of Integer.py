@@ -1,22 +1,19 @@
 class Solution:
     def addToArrayForm(self, num, k):
-        sum_array, carry = [], 0
-        i = len(num) - 1
-        while i >= 0 or k > 0 or carry > 0:
-            if i >= 0:
-                carry += num[i]
-            if k > 0:
-                carry += k % 10
+        reverse_inplace(num)
+        carry, i = 0, 0
+        while i < len(num) or k > 0 or carry > 0:
+            if i == len(num):
+                num.append(0)
+            carry, num[i] = divmod(num[i] + carry + k % 10, 10)
+            i, k = i + 1, k // 10
+        return reverse_inplace(num)
 
-            sum_array.append(carry % 10)
-            carry //= 10
-            i -= 1
-            k //= 10
 
-        i, j = 0, len(sum_array) - 1
-        while i < j:
-            sum_array[i], sum_array[j] = sum_array[j], sum_array[i]
-            i += 1
-            j -= 1
-
-        return sum_array
+def reverse_inplace(array):
+    i, j = 0, len(array) - 1
+    while i < j:
+        array[i], array[j] = array[j], array[i]
+        i += 1
+        j -= 1
+    return array
