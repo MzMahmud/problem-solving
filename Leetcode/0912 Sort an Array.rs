@@ -1,26 +1,25 @@
 impl Solution {
     pub fn sort_array(nums: Vec<i32>) -> Vec<i32> {
-        let end = nums.len() - 1;
+        let n = nums.len();
         let mut a = nums;
-        merge_sort(&mut a, 0, end);
+        let mut merged = vec![0; n];
+        merge_sort(&mut a, 0, n - 1, &mut merged);
         a
     }
 }
 
-fn merge_sort(a: &mut Vec<i32>, start: usize, end: usize) {
+fn merge_sort(a: &mut Vec<i32>, start: usize, end: usize, merged: &mut Vec<i32>) {
     let n = end - start + 1;
     if n < 2 {
         return
     }
     let mid = start + (end - start) / 2;
-    merge_sort(a, start, mid);
-    merge_sort(a, mid + 1, end);
-    merge(a, start, mid, end);
+    merge_sort(a, start, mid, merged);
+    merge_sort(a, mid + 1, end, merged);
+    merge(a, start, mid, end, merged);
 }
 
-fn merge(a: &mut Vec<i32>, start: usize, mid: usize, end: usize) {
-    let n = end - start + 1;
-    let mut merged = vec![0; n];
+fn merge(a: &mut Vec<i32>, start: usize, mid: usize, end: usize, merged: &mut Vec<i32>) {
     let (mut i, mut j, mut k) = (start, mid + 1, 0);
     while i <= mid && j <= end {
         if a[j] < a[i] {
@@ -44,8 +43,8 @@ fn merge(a: &mut Vec<i32>, start: usize, mid: usize, end: usize) {
     }
 
     i = start;
-    for v in merged {
-        a[i] = v;
+    for m_i in 0..k {
+        a[i] = merged[m_i];
         i += 1;
     }
 }
