@@ -7,8 +7,8 @@ function minScore(n: number, roads: number[][]): number {
         adjList[src].push([dst, weight]);
         adjList[dst].push([src, weight]);
     }
-    let minWeightEdge = Number.MAX_VALUE;
-    const visited = new Array(n + 1).fill(false);
+    let minWeightEdge = Infinity;
+    const visited: boolean[] = new Array(n + 1).fill(false);
     function dfs(start: number) {
         if(visited[start]) {
             return;
