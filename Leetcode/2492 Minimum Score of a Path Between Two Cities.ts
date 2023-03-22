@@ -1,23 +1,20 @@
 function minScore(n: number, roads: number[][]): number {
-    const adjList: Map<number, [number, number][]> = new Map();
+    const adjList: [number, number][][] = new Array(n + 1);
+    for (let i = 0; i <= n; i++) {
+        adjList[i] = [];
+    }
     for (const [src, dst, weight] of roads) {
-        if(!adjList.has(src)) {
-            adjList.set(src, []);
-        }
-        if(!adjList.has(dst)) {
-            adjList.set(dst, []);
-        }
-        adjList.get(src).push([dst, weight]);
-        adjList.get(dst).push([src, weight]);
+        adjList[src].push([dst, weight]);
+        adjList[dst].push([src, weight]);
     }
     let minWeightEdge = Number.MAX_VALUE;
-    const visited = new Set<number>();
+    const visited = new Array(n + 1).fill(false);
     function dfs(start: number) {
-        if(visited.has(start)) {
+        if(visited[start]) {
             return;
         }
-        visited.add(start);
-        for(const [child, weight] of adjList.get(start) ?? []) {
+        visited[start] = true;
+        for(const [child, weight] of adjList[start]) {
             minWeightEdge = Math.min(minWeightEdge, weight);
             dfs(child);
         }
