@@ -1,3 +1,32 @@
+// sorting + two pointer solution
+// O(m log m + n log n)
+function successfulPairs(
+    spells: number[], potions: number[], success: number
+): number[] {
+    // O(m lom m)
+    potions.sort((a, b) => a - b);
+
+    // O(n + n lom n)
+    const spellsIndeices = 
+             spells.map((_ , i) => i)
+                   .sort((a, b) => spells[b] - spells[a]);
+    
+    const pairs: number[] = new Array(spells.length).fill(0);
+    // O(n)
+    for (let i = 0, j = 0; i < spells.length && j < potions.length; i++) {
+        const spellsIndex = spellsIndeices[i];
+        const spell = spells[spellsIndex];
+        const factor = Math.ceil(success / spell);
+        while (j < potions.length && potions[j] < factor) {
+            j++;
+        }
+        pairs[spellsIndex]= potions.length - j;
+    }
+    // final O(m log m + n log n)
+    return pairs;
+}
+
+
 // sorting + binary search solution
 // O(m log m + n log m)
 function successfulPairs(
