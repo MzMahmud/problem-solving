@@ -1,22 +1,13 @@
-const rightToLeftMap = {
-    ')': '(', 
-    '}': '{',
-    ']': '[',
-};
+const rightToLeftMap = { ')': '(', '}': '{', ']': '[' };
 
 function isValid(s: string): boolean {
     const stack = [];
     for(const char of s) {
-        const isLeftParentheses = ['(', '{', '['].includes(char);
-        if(isLeftParentheses) {
+        if(['(', '{', '['].includes(char)) {
             stack.push(char);
-            continue;
-        }
-        const stackTop = stack[stack.length - 1];
-        if(stackTop == null || stackTop !== rightToLeftMap[char]) {
+        } else if(stack.length === 0 || stack.pop() !== rightToLeftMap[char]) {
             return false;
         }
-        stack.pop();
     }
     return stack.length === 0;
 }
