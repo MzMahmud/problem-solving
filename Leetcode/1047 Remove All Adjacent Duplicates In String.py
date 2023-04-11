@@ -1,8 +1,8 @@
 class Solution:
-    def removeStars(self, s):
+    def removeDuplicates(self, s):
         stack = []
         for char in s:
-            if char == '*':
+            if stack and stack[-1] == char:
                 stack.pop()
             else:
                 stack.append(char)
