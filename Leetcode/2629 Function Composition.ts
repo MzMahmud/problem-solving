@@ -1,13 +1,7 @@
 type F = (x: number) => number;
 
 function compose(functions: F[]): F {
-    return x => {
-        let result = x;
-        for(let i = functions.length - 1; i >= 0; i--) {
-            result = functions[i](result);
-        }
-        return result;
-    }
+    return x => functions.reduceRight((result, fn) => fn(result), x);
 }
 
 /**
