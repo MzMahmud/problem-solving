@@ -62,12 +62,12 @@ function longestPalindromeSubseq(s: string): number {
                 lps[j] = Math.max(lpsPrev[j], lps[j - 1]);
             }
         }
-        clone(lps, lpsPrev);
+        copy(lps, lpsPrev);
     }
     return lps[n - 1];
 }
 
-function clone(src: number[], dst: number[]) {
+function copy(src: number[], dst: number[]) {
     for (let i = 0; i < dst.length; i++) {
         dst[i] = src[i];
     }
