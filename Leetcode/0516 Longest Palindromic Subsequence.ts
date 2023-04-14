@@ -1,4 +1,5 @@
 // recurrsive solution
+// O(n^2) time, O(n^2) space
 function longestPalindromeSubseq(s: string): number {
     const n = s.length;
     const cache = new Array<number[]>(n);
@@ -25,6 +26,7 @@ function lps(i: number, j: number, s: string, cache: number[][]): number {
 }   
  
 // bottom-up dp solution
+// O(n^2) time, O(n^2) space
 function longestPalindromeSubseq(s: string): number {
     const n = s.length;
     const lps = new Array<number[]>(n);
@@ -42,4 +44,31 @@ function longestPalindromeSubseq(s: string): number {
         }
     }
     return lps[0][n - 1];
+}
+
+
+// memory optimized bottom-up dp
+// O(n^2) time, O(n) space
+function longestPalindromeSubseq(s: string): number {
+    const n = s.length;
+    const lps = new Array<number>(n).fill(0);
+    const lpsPrev = new Array<number>(n).fill(0);
+    for (let i = n - 1; i >= 0; i--) {
+        lps[i] = 1;
+        for (let j = i + 1; j < n; j++) {
+            if (s[i] === s[j]) {
+                lps[j] = 2 + lpsPrev[j - 1];
+            } else {
+                lps[j] = Math.max(lpsPrev[j], lps[j - 1]);
+            }
+        }
+        clone(lps, lpsPrev);
+    }
+    return lps[n - 1];
+}
+
+function clone(src: number[], dst: number[]) {
+    for (let i = 0; i < dst.length; i++) {
+        dst[i] = src[i];
+    }
 }
