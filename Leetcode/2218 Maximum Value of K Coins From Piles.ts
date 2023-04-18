@@ -24,3 +24,27 @@ function maxValue(i: number, k: number, cache: number[][], piles: number[][]): n
     }
     return cache[i][k];
 }
+
+// memory optimized bottom-up dp
+function maxValueOfCoins(piles: number[][], nCoinsToTake: number): number {
+  const dp = new Array<number>(nCoinsToTake + 1).fill(0);
+  const dpPrev = new Array<number>(nCoinsToTake + 1).fill(0);
+  for (let i = piles.length - 1; i >= 0; i--) {
+    for (let k = nCoinsToTake; k > 0; k--) {
+      dp[k] = dpPrev[k];
+      let currentPile = 0;
+      for (let j = 0; j < Math.min(k, piles[i].length); j++) {
+        currentPile += piles[i][j];
+        dp[k] = Math.max(dp[k], currentPile + dpPrev[k - j - 1]);
+      }
+      copy(dp, dpPrev);
+    }
+  }
+  return dpPrev[nCoinsToTake];
+}
+
+function copy(src: number[], dst: number[]) {
+    for (let i = 0; i < src.length; i++) {
+        dst[i] = src[i];
+    }
+}
