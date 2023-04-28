@@ -1,3 +1,11 @@
+// Math Solution
+// good explanation https://leetcode.com/problems/count-sorted-vowel-strings/solutions/1021180/python-start-and-bars-explained/
+function countVowelStrings(n: number): number {
+  // C(n + 4, 4)
+  return (n + 1) * (n + 2) * (n + 3) * (n + 4) / 24;
+}
+
+// DP Solution
 const N_VOWELS = 5;
 
 function countVowelStrings(n: number): number {
