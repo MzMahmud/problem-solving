@@ -4,6 +4,7 @@ type ReturnObj = {
     reset: () => number,
 }
 
+// class solution
 class Counter implements ReturnObj {
     private curr: number;
 
@@ -26,4 +27,14 @@ class Counter implements ReturnObj {
 
 function createCounter(init: number): ReturnObj {
     return new Counter(init);
+}
+
+// object solution
+function createCounter(init: number): ReturnObj {
+    let curr = init;
+    return {
+        increment: () => ++curr,
+        decrement: () => --curr,
+        reset: () => curr = init,
+    };
 }
