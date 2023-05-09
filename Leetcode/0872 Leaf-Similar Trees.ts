@@ -22,3 +22,36 @@ function getLeaves(root: TreeNode | null, leaves: number[]) {
     }
     return leaves;
 }
+
+// O(1) space solution
+function leafSimilar(root1: TreeNode | null, root2: TreeNode | null): boolean {
+    let head1 = getLeavesListHead(root1), head2 = getLeavesListHead(root2);
+    while (head1 !== null && head2 !== null) {
+        if (head1.val !== head2.val) {
+            return false;
+        }
+        head1 = head1.right;
+        head2 = head2.right;
+    }
+    return head1 === null && head2 === null;
+}
+
+function getLeavesListHead(root: TreeNode | null): TreeNode | null {
+    let head: TreeNode | null = null, prev: TreeNode | null = null;
+    function dfs(root: TreeNode | null) {
+        if (root === null) {
+            return;
+        }
+        if (root.left === null && root.right === null) {
+            if (prev === null) {
+                head = prev = root;
+            } else {
+                prev = prev.right = root;
+            }
+        }
+        dfs(root.left);
+        dfs(root.right);
+    }
+    dfs(root);
+    return head;
+}
