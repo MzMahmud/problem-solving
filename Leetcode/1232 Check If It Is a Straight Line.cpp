@@ -1,3 +1,23 @@
+// simple solution
+class Solution {
+    pair<int, int> getDelXDelY(const vector<int>& a, const vector<int>& b) {
+        return {a[0] - b[0], a[1] - b[1]};
+    }
+public:
+    bool checkStraightLine(vector<vector<int>>& coordinates) {
+        auto [delX, delY] = getDelXDelY(coordinates[0], coordinates[1]);
+        for (int i = 2; i < coordinates.size(); i++) {
+            auto [delXi, delYi] = getDelXDelY(coordinates[0], coordinates[i]);
+            bool slopeNotEqual = delX * delYi != delY * delXi;
+            if (slopeNotEqual) {
+                return false;
+            } 
+        }
+        return true;
+    }
+};
+
+
 struct Slope {
     int x, y;
     
