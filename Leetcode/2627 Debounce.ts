@@ -1,8 +1,8 @@
-type F = (...p: any[]) => any;
+type AnyFunction = (...args: any[]) => any;
 
-function debounce(fn: F, t: number): F {
+function debounce<Fn extends AnyFunction>(fn: Fn, t: number) {
     let timer: ReturnType<typeof setTimeout>;
-    return function (...args) {
+    return function (...args: Parameters<Fn>) {
         clearTimeout(timer);
         timer = setTimeout(() => fn(...args), t);
     }
