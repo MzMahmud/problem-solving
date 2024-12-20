@@ -2,6 +2,15 @@ public class Solution
 {
     public string KthDistinct(string[] arr, int k)
     {
+        return arr.GroupBy(n => n)
+                .Where(group => group.Count() == 1)
+                .Skip(k - 1)
+                .Select(g => g.Key)
+                .FirstOrDefault("");
+    }
+    
+    public string _KthDistinct(string[] arr, int k)
+    {
         Dictionary<string, int> count = [];
         foreach (var word in arr)
         {
