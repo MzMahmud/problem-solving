@@ -9,8 +9,8 @@ function numTilePossibilities(tiles: string): number {
             return str.length == 0 ? 0 : countPermutation(str);
         }
         let totalPerm = 0;
+        const ch = String.fromCharCode('A'.charCodeAt(0) + index);
         for (let count = 0; count <= counts[index]; count++) {
-            const ch = String.fromCharCode('A'.charCodeAt(0) + index);
             const nextStr = str + ch.repeat(count);
             totalPerm += dp(index + 1, nextStr);
         }
